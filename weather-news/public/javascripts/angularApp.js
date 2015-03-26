@@ -20,10 +20,14 @@ angular.module('weatherNews', ['ui.router'])
 ])
 .controller('PostCtrl', [
 	'$scope',
+	'$state',
 	'$stateParams',
 	'postFactory', 
-	function($scope, $stateParams, postFactory){
+	function($scope, $state, $stateParams, postFactory){
 		var mypost = postFactory.posts[$stateParams.id];
+		if (!mypost) {
+			$state.go("home");
+		}
 		postFactory.getPost(mypost._id);
 		$scope.post = postFactory.post;
 		$scope.addComment = function(){
